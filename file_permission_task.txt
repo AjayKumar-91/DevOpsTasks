@@ -1,1 +1,14 @@
 
+Create a file:
+sudo touch /home/demo.txt
+
+Change permissions:
+sudo chmod 764 /home/demo.txt
+
+Check permissions:
+ls -l /home/demo.txt
+
+Permission meaning:
+Owner  : read, write, execute
+Group  : read, write
+Others : read only
