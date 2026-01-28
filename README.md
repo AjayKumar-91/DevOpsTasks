@@ -16,6 +16,10 @@ chmod 764 /home/demo.txt
 Step 3: Check permissions (optional)
 ls -l /home/demo.txt
 
+
+<img width="685" height="204" alt="image" src="https://github.com/user-attachments/assets/766f6762-82c2-4fc2-bba4-bb82465ffa0f" />
+
+
 You will see something like:
 -rwxrw-r-- 1 root root 0 Jan 28 17:09 /home/demo.txt
 
