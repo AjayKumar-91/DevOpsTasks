@@ -78,8 +78,10 @@ PART 2: Launch 2 EC2 Instances + Application Load Balancer
 
 <img width="1600" height="856" alt="image" src="https://github.com/user-attachments/assets/372bc301-161c-4776-8840-9c5b2b9d6113" />
 
+<img width="1600" height="867" alt="image" src="https://github.com/user-attachments/assets/8914d4a4-ee0d-4d5d-9217-036957f10f5d" />
 
 
+<img width="1600" height="861" alt="image" src="https://github.com/user-attachments/assets/08191ca5-2146-4805-87ed-d00721e13654" />
 
 
 
