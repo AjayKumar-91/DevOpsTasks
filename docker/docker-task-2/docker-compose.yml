@@ -1,1 +1,6 @@
-
+services:
+  web:
+    build: .
+    container_name: personal-website
+    ports:
+      - "80:80"
