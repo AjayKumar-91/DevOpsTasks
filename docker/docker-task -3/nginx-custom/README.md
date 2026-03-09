@@ -18,4 +18,4 @@
 
 ## Docker Hub Image
 
-https://hub.docker.com/r/yourdockerhubusername/custom-nginx
+https://hub.docker.com/r/ajaykumar91/custom-nginx
