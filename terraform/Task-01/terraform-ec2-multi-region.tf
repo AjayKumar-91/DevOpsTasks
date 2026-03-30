@@ -1,72 +1,69 @@
-# Default region provider
+# Provider for Mumbai
 provider "aws" {
-  alias  = "us_east_1"
+  alias  = "mumbai"
+  region = "ap-south-1"
+}
+
+# Provider for Virginia
+provider "aws" {
+  alias  = "virginia"
   region = "us-east-1"
 }
 
-provider "aws" {
-  alias  = "us_west_2"
-  region = "us-west-2"
+# Mumbai Key Pair
+resource "aws_key_pair" "mumbai_key" {
+  provider   = aws.mumbai
+  key_name   = "terra-ec2-key-mumbai"
+  public_key = file("terra-ec2-key.pub")
 }
 
-# ---------------------------
-# VARIABLES
-# ---------------------------
-variable "instance_type" {
-  default = "t2.micro"
+# Virginia Key Pair
+resource "aws_key_pair" "virginia_key" {
+  provider   = aws.virginia
+  key_name   = "terra-ec2-key-virginia"
+  public_key = file("terra-ec2-key.pub")
 }
 
-variable "ami" {
-  default = "ami-0c02fb55956c7d316" # Ubuntu 22.04 LTS for us-east-1 (update for your regions)
-}
-
-variable "key_name" {
-  default = "my-key" # Replace with your actual key pair name
-}
-
-# ---------------------------
-# VPCs
-# ---------------------------
-resource "aws_vpc" "vpc_east" {
-  provider = aws.us_east_1
+# Create VPCs in both regions
+resource "aws_vpc" "vpc_mumbai" {
+  provider   = aws.mumbai
   cidr_block = "10.0.0.0/16"
   tags = {
-    Name = "VPC-East"
+    Name = "mumbai-vpc"
   }
 }
 
-resource "aws_vpc" "vpc_west" {
-  provider = aws.us_west_2
+resource "aws_vpc" "vpc_virginia" {
+  provider   = aws.virginia
   cidr_block = "10.1.0.0/16"
   tags = {
-    Name = "VPC-West"
+    Name = "virginia-vpc"
   }
 }
 
-# ---------------------------
 # Subnets
-# ---------------------------
-resource "aws_subnet" "subnet_east" {
-  provider = aws.us_east_1
-  vpc_id     = aws_vpc.vpc_east.id
-  cidr_block = "10.0.1.0/24"
+resource "aws_subnet" "subnet_mumbai" {
+  provider          = aws.mumbai
+  vpc_id            = aws_vpc.vpc_mumbai.id
+  cidr_block        = "10.0.1.0/24"
+  availability_zone = "ap-south-1a"
+  tags              = { Name = "mumbai-subnet" }
+}
+
+resource "aws_subnet" "subnet_virginia" {
+  provider          = aws.virginia
+  vpc_id            = aws_vpc.vpc_virginia.id
+  cidr_block        = "10.1.1.0/24"
   availability_zone = "us-east-1a"
+  tags              = { Name = "virginia-subnet" }
 }
 
-resource "aws_subnet" "subnet_west" {
-  provider = aws.us_west_2
-  vpc_id     = aws_vpc.vpc_west.id
-  cidr_block = "10.1.1.0/24"
-  availability_zone = "us-west-2a"
-}
-
-# ---------------------------
 # Security Groups
-# ---------------------------
-resource "aws_security_group" "sg_east" {
-  provider = aws.us_east_1
-  name   = "sg-east"
-  vpc_id = aws_vpc.vpc_east.id
+resource "aws_security_group" "sg_mumbai" {
+  provider    = aws.mumbai
+  name        = "mumbai-sg"
+  description = "Allow SSH and HTTP"
+  vpc_id      = aws_vpc.vpc_mumbai.id
 
   ingress {
     from_port   = 22
@@ -90,10 +87,11 @@ resource "aws_security_group" "sg_east" {
   }
 }
 
-resource "aws_security_group" "sg_west" {
-  provider = aws.us_west_2
-  name   = "sg-west"
-  vpc_id = aws_vpc.vpc_west.id
+resource "aws_security_group" "sg_virginia" {
+  provider    = aws.virginia
+  name        = "virginia-sg"
+  description = "Allow SSH and HTTP"
+  vpc_id      = aws_vpc.vpc_virginia.id
 
   ingress {
     from_port   = 22
@@ -117,31 +115,23 @@ resource "aws_security_group" "sg_west" {
   }
 }
 
-# ---------------------------
 # EC2 Instances
-# ---------------------------
-resource "aws_instance" "instance_east" {
-  provider = aws.us_east_1
-  ami           = var.ami
-  instance_type = var.instance_type
-  subnet_id     = aws_subnet.subnet_east.id
-  key_name      = var.key_name
-  vpc_security_group_ids = [aws_security_group.sg_east.id]
-
-  tags = {
-    Name = "EC2-East"
-  }
+resource "aws_instance" "linux_mumbai" {
+  provider        = aws.mumbai
+  ami             = "ami-06f2f23b8b95143c4" # Amazon Linux 2 in ap-south-1
+  instance_type   = "t3.micro"
+  subnet_id       = aws_subnet.subnet_mumbai.id
+  key_name        = aws_key_pair.mumbai_key.key_name
+  security_groups = [aws_security_group.sg_mumbai.id]
+  tags            = { Name = "linux-mumbai" }
 }
 
-resource "aws_instance" "instance_west" {
-  provider = aws.us_west_2
-  ami           = var.ami
-  instance_type = var.instance_type
-  subnet_id     = aws_subnet.subnet_west.id
-  key_name      = var.key_name
-  vpc_security_group_ids = [aws_security_group.sg_west.id]
-
-  tags = {
-    Name = "EC2-West"
-  }
+resource "aws_instance" "linux_virginia" {
+  provider        = aws.virginia
+  ami             = "ami-0dc2d3e4c0f9ebd18" # Amazon Linux 2 in us-east-1
+  instance_type   = "t3.micro"
+  subnet_id       = aws_subnet.subnet_virginia.id
+  key_name        = aws_key_pair.virginia_key.key_name
+  security_groups = [aws_security_group.sg_virginia.id]
+  tags            = { Name = "linux-virginia" }
 }
