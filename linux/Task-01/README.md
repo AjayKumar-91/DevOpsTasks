@@ -125,6 +125,7 @@ done
 echo "Latest 5 files:"
 ls -lt | head -5
 ```
+<img width="1917" height="686" alt="image" src="https://github.com/user-attachments/assets/896b3e89-314c-4e0b-82d0-2dc9ff1f9a17" />
 
 ---
 
