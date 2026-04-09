@@ -253,6 +253,15 @@ Steps:
 
 <img width="1918" height="967" alt="image" src="https://github.com/user-attachments/assets/0aeb23de-b265-4500-b518-c2d4cb041e74" />
 
+<img width="1918" height="966" alt="image" src="https://github.com/user-attachments/assets/6b0a0bc8-c766-4a51-a441-805290d4c301" />
+
+<img width="1917" height="987" alt="image" src="https://github.com/user-attachments/assets/e131b7fa-4c90-4ca2-b833-cfd08fa41bd2" />
+
+<img width="1918" height="962" alt="image" src="https://github.com/user-attachments/assets/404e7147-857e-4414-87ef-06ee219a2f9d" />
+
+<img width="1918" height="982" alt="image" src="https://github.com/user-attachments/assets/f295b5b4-878b-4be5-bda6-ef6dbd37fede" />
+
+<img width="1918" height="976" alt="image" src="https://github.com/user-attachments/assets/a555f963-3c37-4a04-a9ee-e1a42933b05e" />
 
 ### Option 2 (Manual Panels)
 
