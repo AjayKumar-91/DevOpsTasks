@@ -1,4 +1,4 @@
-# Monitoring Setup (Prometheus + Grafana + Node Exporter)
+<img width="1918" height="972" alt="image" src="https://github.com/user-attachments/assets/3b606589-9c2c-435d-98a3-7496829953b3" /># Monitoring Setup (Prometheus + Grafana + Node Exporter)
 
 ## Architecture Overview
 
@@ -180,14 +180,36 @@ sudo systemctl enable grafana-server
 ## Step 8: Access Services
 
 * Prometheus:
-  `http://<EC2-IP>:9090`
+  `http://54.234.123.117:9090`
+  
+<img width="1918" height="970" alt="image" src="https://github.com/user-attachments/assets/93edcc86-358a-4e6e-8e16-54ce25662323" />
+
+### Create the log directory
+sudo mkdir -p /var/log/prometheus
+
+### Give both directories to the prometheus user
+sudo chown -R prometheus:prometheus /var/lib/prometheus /var/log/prometheus
+
+### Set proper permissions
+sudo chmod -R 755 /var/lib/prometheus /var/log/prometheus
+
+### Reload systemd and restart Prometheus
+sudo systemctl daemon-reload
+sudo systemctl restart prometheus
+
+### Check status
+sudo systemctl status prometheus
 
 * Grafana:
-  `http://<EC2-IP>:3000`
+  `http://54.234.123.117:3000`
   Default login:
 
   * user: `admin`
   * pass: `admin`
+    
+<img width="1918" height="960" alt="image" src="https://github.com/user-attachments/assets/d5eeab62-8043-4fdb-82ea-2b7bcec680e8" />
+
+<img width="1918" height="968" alt="image" src="https://github.com/user-attachments/assets/98191247-22da-4f25-b5a0-c2228b8d5c78" />
 
 ---
 
@@ -202,7 +224,14 @@ sudo systemctl enable grafana-server
    ```
    http://localhost:9090
    ```
+
+
+
+   
 6. Click **Save & Test**
+
+
+<img width="1918" height="972" alt="image" src="https://github.com/user-attachments/assets/66c2fb00-b3f0-4706-8d17-d541b7d34630" />
 
 ---
 
@@ -219,7 +248,11 @@ Steps:
 3. Select Prometheus datasource
 4. Click Import
 
----
+
+<img width="1913" height="977" alt="image" src="https://github.com/user-attachments/assets/0328624a-e5e1-4cab-98ca-8219e7bf8ef4" />
+
+<img width="1918" height="967" alt="image" src="https://github.com/user-attachments/assets/0aeb23de-b265-4500-b518-c2d4cb041e74" />
+
 
 ### Option 2 (Manual Panels)
 
@@ -259,6 +292,7 @@ sudo ufw allow 9100
 systemctl status prometheus
 journalctl -xe
 ```
+<img width="1918" height="971" alt="image" src="https://github.com/user-attachments/assets/c7ec8978-aef1-44e5-83f5-bcafed9f75ec" />
 
 ---
 
