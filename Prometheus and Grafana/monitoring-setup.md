@@ -18,6 +18,8 @@
   * `9090` → Prometheus
   * `3000` → Grafana
   * `9100` → Node Exporter
+    
+<img width="1918" height="827" alt="image" src="https://github.com/user-attachments/assets/42aebd12-ad18-41ab-81ba-c4eb2326b1c7" />
 
 ---
 
@@ -29,11 +31,11 @@ sudo useradd --no-create-home --shell /bin/false prometheus
 
 # Download Prometheus
 cd /tmp
-wget https://github.com/prometheus/prometheus/releases/latest/download/prometheus-*.linux-amd64.tar.gz
+ wget https://github.com/prometheus/prometheus/releases/download/v3.10.0/prometheus-3.10.0.linux-amd64.tar.gz
 
 # Extract
-tar -xvf prometheus-*.tar.gz
-cd prometheus-*
+tar -xvf prometheus-3.10.0.linux-amd64.tar.gz
+cd prometheus-3.10.0.linux-amd64
 
 # Move binaries
 sudo cp prometheus /usr/local/bin/
@@ -45,7 +47,9 @@ sudo mkdir /var/lib/prometheus
 
 # Copy config
 sudo cp prometheus.yml /etc/prometheus/
+
 ```
+<img width="1918" height="647" alt="image" src="https://github.com/user-attachments/assets/00c1d6a3-6689-4519-a7fe-46ae9731965b" />
 
 ---
 
@@ -61,6 +65,9 @@ scrape_configs:
     static_configs:
       - targets: ["localhost:9100"]
 ```
+<img width="1918" height="975" alt="image" src="https://github.com/user-attachments/assets/2a6d724b-a4e1-4c3e-931b-1b193fd2f7ac" />
+
+
 
 ---
 
@@ -84,6 +91,7 @@ ExecStart=/usr/local/bin/prometheus \
 [Install]
 WantedBy=multi-user.target
 ```
+<img width="1918" height="302" alt="image" src="https://github.com/user-attachments/assets/c5644a34-bdf8-41e0-b437-b83675a641da" />
 
 ```bash
 sudo systemctl daemon-reexec
